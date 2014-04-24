@@ -18,14 +18,14 @@
 //=============================================================================
 
 #undef DEBUG
-namespace BDInfoLib.BDROM
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Text;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
 
+namespace BDInfo
+{
     public class TSPlaylistFile
     {
         private FileInfo FileInfo = null;

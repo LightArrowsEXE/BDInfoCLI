@@ -18,13 +18,14 @@
 //=============================================================================
 
 #undef DEBUG
-namespace BDInfoLib.BDROM
-{
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
 
+namespace BDInfo
+{
     public class TSStreamClipFile
     {
         public FileInfo FileInfo = null;

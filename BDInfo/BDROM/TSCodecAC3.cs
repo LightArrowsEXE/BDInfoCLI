@@ -18,10 +18,13 @@
 //=============================================================================
 
 #undef DEBUG
-namespace BDInfoLib.BDROM
-{
-    using System.IO;
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Text;
 
+namespace BDInfo
+{
     public abstract class TSCodecAC3
     {
         private static byte[] eac3_blocks =  new byte[] { 1, 2, 3, 6 };

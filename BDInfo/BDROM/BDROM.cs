@@ -17,14 +17,14 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //=============================================================================
 
-namespace BDInfoLib.BDROM
-{
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Runtime.InteropServices;
-    using System.Text;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
 
+namespace BDInfo
+{
     public class BDROM
     {
         public DirectoryInfo DirectoryRoot = null;
@@ -83,7 +83,7 @@ namespace BDInfoLib.BDROM
             
             if (DirectoryBDMV == null)
             {
-                throw new DirectoryNotFoundException("Unable to locate BD structure.");
+                throw new Exception("Unable to locate BD structure.");
             }
 
             DirectoryRoot = 
@@ -104,7 +104,7 @@ namespace BDInfoLib.BDROM
             if (DirectoryCLIPINF == null
                 || DirectoryPLAYLIST == null)
             {
-                throw new DirectoryNotFoundException("Unable to locate BD structure.");
+                throw new Exception("Unable to locate BD structure.");
             }
 
             //
