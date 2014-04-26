@@ -25,13 +25,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return Properties.Settings.Default.GenerateStreamDiagnostics; }
+                try { return BDInfo.Properties.Settings.Default.GenerateStreamDiagnostics; }
                 catch { return true; }
             }
 
             set
             {
-                try { Properties.Settings.Default.GenerateStreamDiagnostics = value; }
+                try { BDInfo.Properties.Settings.Default.GenerateStreamDiagnostics = value; }
                 catch { }
             }
         }
@@ -40,13 +40,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return Properties.Settings.Default.EnableSSIF; }
+                try { return BDInfo.Properties.Settings.Default.EnableSSIF; }
                 catch { return true; }
             }
 
             set
             {
-                try { Properties.Settings.Default.EnableSSIF = value; }
+                try { BDInfo.Properties.Settings.Default.EnableSSIF = value; }
                 catch { }
             }
         }
@@ -55,13 +55,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return Properties.Settings.Default.AutosaveReport; }
+                try { return BDInfo.Properties.Settings.Default.AutosaveReport; }
                 catch { return false; }
             }
 
             set
             {
-                try { Properties.Settings.Default.AutosaveReport = value; }
+                try { BDInfo.Properties.Settings.Default.AutosaveReport = value; }
                 catch { }
             }
         }
@@ -70,13 +70,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return Properties.Settings.Default.GenerateFrameDataFile; }
+                try { return BDInfo.Properties.Settings.Default.GenerateFrameDataFile; }
                 catch { return false; }
             }
 
             set
             {
-                try { Properties.Settings.Default.GenerateFrameDataFile = value; }
+                try { BDInfo.Properties.Settings.Default.GenerateFrameDataFile = value; }
                 catch { }
             }
         }
@@ -85,13 +85,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return Properties.Settings.Default.FilterLoopingPlaylists; }
+                try { return BDInfo.Properties.Settings.Default.FilterLoopingPlaylists; }
                 catch { return false; }
             }
 
             set
             {
-                try { Properties.Settings.Default.FilterLoopingPlaylists = value; }
+                try { BDInfo.Properties.Settings.Default.FilterLoopingPlaylists = value; }
                 catch { }
             }
         }
@@ -100,13 +100,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return Properties.Settings.Default.FilterShortPlaylists; }
+                try { return BDInfo.Properties.Settings.Default.FilterShortPlaylists; }
                 catch { return false; }
             }
 
             set
             {
-                try { Properties.Settings.Default.FilterShortPlaylists = value; }
+                try { BDInfo.Properties.Settings.Default.FilterShortPlaylists = value; }
                 catch { }
             }
         }
@@ -115,13 +115,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return Properties.Settings.Default.FilterShortPlaylistsValue; }
+                try { return BDInfo.Properties.Settings.Default.FilterShortPlaylistsValue; }
                 catch { return 0; }
             }
 
             set
             {
-                try { Properties.Settings.Default.FilterShortPlaylistsValue = value; }
+                try { BDInfo.Properties.Settings.Default.FilterShortPlaylistsValue = value; }
                 catch { }
             }
         }
@@ -130,13 +130,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return Properties.Settings.Default.UseImagePrefix; }
+                try { return BDInfo.Properties.Settings.Default.UseImagePrefix; }
                 catch { return false; }
             }
 
             set
             {
-                try { Properties.Settings.Default.UseImagePrefix = value; }
+                try { BDInfo.Properties.Settings.Default.UseImagePrefix = value; }
                 catch { }
             }
         }
@@ -145,13 +145,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return Properties.Settings.Default.UseImagePrefixValue; }
+                try { return BDInfo.Properties.Settings.Default.UseImagePrefixValue; }
                 catch { return null; }
             }
 
             set
             {
-                try { Properties.Settings.Default.UseImagePrefixValue = value; }
+                try { BDInfo.Properties.Settings.Default.UseImagePrefixValue = value; }
                 catch { }
             }
         }
@@ -160,13 +160,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return Properties.Settings.Default.KeepStreamOrder; }
+                try { return BDInfo.Properties.Settings.Default.KeepStreamOrder; }
                 catch { return false; }
             }
 
             set
             {
-                try { Properties.Settings.Default.KeepStreamOrder = value; }
+                try { BDInfo.Properties.Settings.Default.KeepStreamOrder = value; }
                 catch { }
             }
         }
@@ -175,13 +175,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return Properties.Settings.Default.GenerateTextSummary; }
+                try { return BDInfo.Properties.Settings.Default.GenerateTextSummary; }
                 catch { return false; }
             }
 
             set
             {
-                try { Properties.Settings.Default.GenerateTextSummary = value; }
+                try { BDInfo.Properties.Settings.Default.GenerateTextSummary = value; }
                 catch { }
             }
         }
@@ -190,13 +190,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return Properties.Settings.Default.LastPath; }
+                try { return BDInfo.Properties.Settings.Default.LastPath; }
                 catch { return ""; }
             }
 
             set
             {
-                try { Properties.Settings.Default.LastPath = value; }
+                try { BDInfo.Properties.Settings.Default.LastPath = value; }
                 catch { }
             }
         }
@@ -205,7 +205,7 @@ namespace BDInfoLib
         {
             try
             {
-                Properties.Settings.Default.Save();
+                BDInfo.Properties.Settings.Default.Save();
             }
             catch { }
         }

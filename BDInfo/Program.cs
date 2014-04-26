@@ -17,9 +17,28 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //=============================================================================
 
+using BDInfo;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 namespace BDInfoLib
 {
     static class Program
     {
+       
+
+        static void Main()
+        {
+            String path = "Z:\\htpc13\\WORKING\\hot_tub_time_machine\\BDMV";
+            runner run = new runner();
+            run.InitBDROM(path);
+            TSPlaylistFile selectedPlayList = run.SelectPlayList();
+            List<TSPlaylistFile> list = new List<TSPlaylistFile>() { selectedPlayList };
+            run.AddStreamFilesInPlaylists(list);
+
+            System.Console.Read();
+        }
+
     }
 }
+

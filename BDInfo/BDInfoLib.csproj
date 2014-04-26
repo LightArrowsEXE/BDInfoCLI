@@ -6,10 +6,10 @@
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CF10DEBE-9A1B-4CD6-B566-E6013C1E6CB9}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BDInfoLib</RootNamespace>
-    <AssemblyName>BDInfoLib</AssemblyName>
+    <RootNamespace>BDInfo</RootNamespace>
+    <AssemblyName>BDInfo</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -85,6 +85,8 @@
     <Compile Include="BDROM\TSPlaylistFile.cs" />
     <Compile Include="BDROM\TSStream.cs" />
     <Compile Include="BDROM\TSCodecVC1.cs" />
+    <Compile Include="FormReport.cs" />
+    <Compile Include="runner.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
