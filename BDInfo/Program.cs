@@ -25,20 +25,27 @@ namespace BDInfoLib
 {
     static class Program
     {
-       
 
-        static void Main()
+
+        static void Main(string[] args)
         {
-            String path = "Z:\\htpc13\\WORKING\\hot_tub_time_machine\\BDMV";
+            if (args.Length != 2)
+            {
+                System.Console.WriteLine("Usage: BDinfo <BD Folder> <Save Path>");
+                Environment.Exit(-1);
+            }
+
+            String BDpath = args[0];
+            String savePath = args[1];
+
             runner run = new runner();
-            run.InitBDROM(path);
-            TSPlaylistFile selectedPlayList = run.SelectPlayList();
-            List<TSPlaylistFile> list = new List<TSPlaylistFile>() { selectedPlayList };
-            run.AddStreamFilesInPlaylists(list);
+            run.InitBDROM(BDpath);
 
-            System.Console.Read();
+            run.SelectPlayList();
+            run.AddStreamFilesInPlaylists();
+            run.ScanBDROM();
+            run.GenerateReport(savePath);
         }
-
     }
 }
 

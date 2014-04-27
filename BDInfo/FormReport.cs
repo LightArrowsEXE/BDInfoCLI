@@ -12,19 +12,19 @@ namespace BDInfo
     {
         private List<TSPlaylistFile> Playlists;
 
-        public void Generate(BDROM BDROM, List<TSPlaylistFile> playlists, BDInfo.runner.ScanBDROMResult scanResult)
+        public void Generate(BDROM BDROM, List<TSPlaylistFile> playlists, BDInfo.runner.ScanBDROMResult scanResult, String savePath)
         {
             Playlists = playlists;
 
             StreamWriter reportFile = null;
-            if (BDInfoSettings.AutosaveReport)
-            {
+           /* if (BDInfoSettings.AutosaveReport)
+            {*/
                 string reportName = string.Format(
                     "BDINFO.{0}.txt",
                     BDROM.VolumeLabel);
 
-                reportFile = File.CreateText(Path.Combine(Environment.CurrentDirectory, reportName));
-            }
+                reportFile = File.CreateText(Path.Combine(savePath, reportName));
+            //}
             //textBoxReport.Text = "";
 
             string report = "";
@@ -1010,7 +1010,7 @@ namespace BDInfo
                     report += "\r\n";
                 }
 
-                if (BDInfoSettings.AutosaveReport && reportFile != null)
+                if (/*BDInfoSettings.AutosaveReport &&*/ reportFile != null)
                 {
                     try { reportFile.Write(report); }
                     catch { }
@@ -1020,7 +1020,7 @@ namespace BDInfo
                 GC.Collect();
             }
 
-            if (BDInfoSettings.AutosaveReport && reportFile != null)
+            if (/*BDInfoSettings.AutosaveReport &&*/ reportFile != null)
             {
                 try { reportFile.Write(report); }
                 catch { }

@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace BDInfo
@@ -11,7 +9,7 @@ namespace BDInfo
     public class runner
     {
         private BDROM BDROM = null;
-        private int CustomPlaylistCount = 0;
+        List<TSPlaylistFile> selectedPlayLists = new List<TSPlaylistFile>();
         ScanBDROMResult ScanResult = new ScanBDROMResult();
         List<TSStreamFile> streamFiles;
         ScanBDROMState scanState;
@@ -24,25 +22,6 @@ namespace BDInfo
         public void InitBDROM(string path)
         {
             System.Console.WriteLine("Please wait while we scan the disc...");
-
-            CustomPlaylistCount = 0;
-
-            List<String> mplsList = new List<string>(){ "00801.mpls" };
-
-            InitBDROMWork(path);
-            
-            
-            /*ScanBDROM();
-            ScanBDROMWork();
-            ScanBDROMProgress();
-            ScanBDROMCompleted(new List<String>());
-             * */
-            
-
-        }
-
-        private void InitBDROMWork(String path)
-        {
             try
             {
                 BDROM = new BDROM(path);
@@ -121,7 +100,7 @@ namespace BDInfo
 
         #region Scan BDROM
 
-        private BackgroundWorker ScanBDROMWorker = null;
+        //private BackgroundWorker ScanBDROMWorker = null;
 
         private class ScanBDROMState
         {
@@ -134,17 +113,18 @@ namespace BDInfo
             public Exception Exception = null;
         }
         
-        public void AddStreamFilesInPlaylists(List<TSPlaylistFile> playlists)
+        public void AddStreamFilesInPlaylists()
         {
           
-            System.Console.WriteLine("Preparing to the following...");
+            System.Console.WriteLine("Preparing to analyze the following:");
            
             streamFiles = new List<TSStreamFile>();
-            List<string> streamNames = new List<string>();
+            List<string> streamNames;
             
-            foreach(TSPlaylistFile playlist in playlists)
+            foreach(TSPlaylistFile playlist in selectedPlayLists)
             {
-                System.Console.WriteLine("Selected {0}", playlist.Name);
+                System.Console.Write("{0} --> ", playlist.Name);
+                streamNames = new List<string>();
 
                 foreach (TSStreamClip clip in playlist.StreamClips)
                 {
@@ -160,7 +140,7 @@ namespace BDInfo
             }
         }
          
-        private void ScanBDROMWork()
+        public void ScanBDROM()
         {
             ScanResult = new ScanBDROMResult();
             ScanResult.ScanException = new Exception("Scan is still running.");
@@ -203,7 +183,8 @@ namespace BDInfo
                     }
                 }
 
-                //timer = new System.Threading.Timer(ScanBDROMEvent, scanState, 1000, 1000);
+                timer = new System.Threading.Timer(ScanBDROMProgress, scanState, 1000, 1000);
+                System.Console.WriteLine("\n{0,16}{1,-15}{2,-13}{3}","", "File", "Elapsed", "Remainging");
 
                 foreach (TSStreamFile streamFile in streamFiles)
                 {
@@ -213,15 +194,7 @@ namespace BDInfo
                     thread.Start(scanState);
                     while (thread.IsAlive)
                     {
-                        /*
-                        if (ScanBDROMWorker.CancellationPending)
-                        {
-                            ScanResult.ScanException = new Exception("Scan was cancelled.");
-                            thread.Abort();
-                            return;
-                        }
-                         * */
-                        Thread.Sleep(10);
+                        Thread.Sleep(100);
                     }
                     scanState.FinishedBytes += streamFile.FileInfo.Length;
                     if (scanState.Exception != null)
@@ -237,13 +210,14 @@ namespace BDInfo
             }
             finally
             {
+                System.Console.WriteLine();
                 if (timer != null)
                 {
                     timer.Dispose();
                 }
             }
         }
-        
+
         private void ScanBDROMThread(object parameter)
         {
             ScanBDROMState scanState = (ScanBDROMState)parameter;
@@ -259,28 +233,23 @@ namespace BDInfo
             }
         }
         
-        private void ScanBDROMProgress()
+        private void ScanBDROMProgress(object state)
         {
+            ScanBDROMState currentScanState = (ScanBDROMState)state;
             try
             {
-                if (scanState.StreamFile != null)
+                long finishedBytes = currentScanState.FinishedBytes;
+                if (currentScanState.StreamFile != null)
                 {
-                    System.Console.WriteLine("Scanning {0}...\r\n", scanState.StreamFile.DisplayName);
+                    finishedBytes += currentScanState.StreamFile.Size;
                 }
 
-                long finishedBytes = scanState.FinishedBytes;
-                if (scanState.StreamFile != null)
-                {
-                    finishedBytes += scanState.StreamFile.Size;
-                }
-
-                double progress = ((double)finishedBytes / scanState.TotalBytes);
+                double progress = ((double)finishedBytes / currentScanState.TotalBytes);
                 int progressValue = (int)Math.Round(progress * 100);
                 if (progressValue < 0) progressValue = 0;
                 if (progressValue > 100) progressValue = 100;
-                System.Console.WriteLine(progressValue);
 
-                TimeSpan elapsedTime = DateTime.Now.Subtract(scanState.TimeStarted);
+                TimeSpan elapsedTime = DateTime.Now.Subtract(currentScanState.TimeStarted);
                 TimeSpan remainingTime;
                 if (progress > 0 && progress < 1)
                 {
@@ -291,36 +260,35 @@ namespace BDInfo
                 {
                     remainingTime = new TimeSpan(0);
                 }
-                /*
-                labelTimeElapsed.Text = string.Format(
+                
+                String elapsedTimeString = string.Format(
                     "{0:D2}:{1:D2}:{2:D2}",
                     elapsedTime.Hours,
                     elapsedTime.Minutes,
                     elapsedTime.Seconds);
 
-                labelTimeRemaining.Text = string.Format(
+                String remainingTimeString = string.Format(
                     "{0:D2}:{1:D2}:{2:D2}",
                     remainingTime.Hours,
                     remainingTime.Minutes,
                     remainingTime.Seconds);
 
-                UpdatePlaylistBitrates();
-                 * */
+                if (currentScanState.StreamFile != null)
+                {
+                    System.Console.Write("Scanning {0,3:d}% - {1,10} {2,12}  |  {3}\r", progressValue, currentScanState.StreamFile.DisplayName, elapsedTimeString, remainingTimeString);
+                }
+                else
+                {
+                    System.Console.Write("Scanning {0,3}% - \t{2,10}  |  {3}...\r", currentScanState.StreamFile.DisplayName);
+
+                }
+                
             }
             catch { }
         }
 
-        private void ScanBDROMCompleted(List<String> mplsList)
+        public void GenerateReport(String savePath)
         {
-            
-            /*
-            UpdatePlaylistBitrates();
-
-            labelProgress.Text = "Scan complete.";
-            progressBarScan.Value = 100;
-            labelTimeRemaining.Text = "00:00:00";
-             * */
-
             if (ScanResult.ScanException != null)
             {
                 System.Console.WriteLine(string.Format("{0}", ScanResult.ScanException.Message));
@@ -335,8 +303,17 @@ namespace BDInfo
                 {
                     System.Console.WriteLine("Scan completed successfully.");
                 }
-                
-                GenerateReport(mplsList);
+
+                System.Console.WriteLine("Please wait while we generate the report...");
+                try
+                {
+                    FormReport report = new FormReport();
+                    report.Generate(BDROM, selectedPlayLists, ScanResult, savePath);
+                }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine(string.Format("{0}", (ex.Message)));
+                }
             }
         }       
         
@@ -346,19 +323,6 @@ namespace BDInfo
         {
             public Exception ScanException = new Exception("Scan has not been run.");
             public Dictionary<string, Exception> FileExceptions = new Dictionary<string, Exception>();
-        }
-
-        private void ScanBDROMEvent(object state)
-        {
-            try
-            {
-                if (ScanBDROMWorker.IsBusy &&
-                    !ScanBDROMWorker.CancellationPending)
-                {
-                    ScanBDROMWorker.ReportProgress(0, state);
-                }
-            }
-            catch { }
         }
 
         static bool GetYorNdefaultY()
@@ -395,7 +359,7 @@ namespace BDInfo
 
                 Console.Write("Select: ");
                 response = Console.ReadLine();
-                Console.WriteLine();
+                //Console.WriteLine();
 
                 try
                 {
@@ -405,38 +369,18 @@ namespace BDInfo
                 {
                     Console.WriteLine("Invalid Input! ");
                 }
+
+                if (resp > max || resp < min)
+                {
+                    System.Console.WriteLine("Invalid Selection!");
+                }
             } while (resp > max || resp < min);
+
+            System.Console.WriteLine();
 
             return resp;
         }
 
-        #region Generate report
-        private void GenerateReport(List<String> mplsList)
-        {
-            System.Console.WriteLine("Please wait while we generate the report...");
-           
-            List<TSPlaylistFile> playlists = new List<TSPlaylistFile>();
-            
-            foreach (String item in mplsList)
-            {
-                if (BDROM.PlaylistFiles.ContainsKey(item))
-                {
-                    playlists.Add(BDROM.PlaylistFiles[item]);
-                }
-            }
-
-            try
-            {
-                FormReport report = new FormReport();
-                report.Generate(BDROM, playlists, ScanResult);
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine(string.Format("{0}", (ex.Message)));
-            }
-
-        }
-        #endregion 
 
         #region Play Lists        
         
@@ -471,9 +415,13 @@ namespace BDInfo
             }
         }
 
-        public TSPlaylistFile SelectPlayList()
+        public void SelectPlayList()
         {
-            if (BDROM == null) return null;
+            if (BDROM == null)
+            {
+                System.Console.WriteLine("Cannot select playlist, BDROM Error");
+                return;
+            }
 
             bool hasHiddenTracks = false;
 
@@ -595,7 +543,7 @@ namespace BDInfo
                 System.Console.WriteLine("(*) Some playlists on this disc have hidden tracks. These tracks are marked with an asterisk.");
             }
 
-            return plsDict[getIntIndex(1, index)];
+            selectedPlayLists.Add(plsDict[getIntIndex(1, index-1)]);
         }
 
         #endregion
