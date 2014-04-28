@@ -184,7 +184,7 @@ namespace BDInfo
                 }
 
                 timer = new System.Threading.Timer(ScanBDROMProgress, scanState, 1000, 1000);
-                System.Console.WriteLine("\n{0,16}{1,-15}{2,-13}{3}","", "File", "Elapsed", "Remainging");
+                System.Console.WriteLine("\n{0,16}{1,-15}{2,-13}{3}","", "File", "Elapsed", "Remaining");
 
                 foreach (TSStreamFile streamFile in streamFiles)
                 {
