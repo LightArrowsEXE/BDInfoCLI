@@ -490,7 +490,7 @@ namespace BDInfo
                 }
             }
 
-            System.Console.WriteLine(String.Format("{0,-4}{1,-7}{2,-15}{3,-10}{4,-16}{5,-16}\n", "#", "Group", "Playlist File", "Length", "Esitamted Bytes", "Measured Bytes"));
+            System.Console.WriteLine(String.Format("{0,-4}{1,-7}{2,-15}{3,-10}{4,-16}{5,-16}\n", "#", "Group", "Playlist File", "Length", "Estimated Bytes", "Measured Bytes"));
             int index = 1;
             Dictionary<int,TSPlaylistFile> plsDict = new Dictionary<int,TSPlaylistFile>();
 
