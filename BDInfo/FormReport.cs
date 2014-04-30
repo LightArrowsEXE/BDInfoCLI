@@ -1,4 +1,4 @@
-﻿using BDInfoLib;
+﻿using BDInfoCli;
 using System;
 using System.Collections.Generic;
 using System.IO;

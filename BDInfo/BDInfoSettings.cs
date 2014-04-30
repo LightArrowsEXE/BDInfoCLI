@@ -17,7 +17,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //=============================================================================
 
-namespace BDInfoLib
+namespace BDInfoCli
 {
     public class BDInfoSettings
     {
@@ -25,13 +25,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return BDInfo.Properties.Settings.Default.GenerateStreamDiagnostics; }
+                try { return BDInfoCli.Properties.Settings.Default.GenerateStreamDiagnostics; }
                 catch { return true; }
             }
 
             set
             {
-                try { BDInfo.Properties.Settings.Default.GenerateStreamDiagnostics = value; }
+                try { BDInfoCli.Properties.Settings.Default.GenerateStreamDiagnostics = value; }
                 catch { }
             }
         }
@@ -40,13 +40,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return BDInfo.Properties.Settings.Default.EnableSSIF; }
+                try { return BDInfoCli.Properties.Settings.Default.EnableSSIF; }
                 catch { return true; }
             }
 
             set
             {
-                try { BDInfo.Properties.Settings.Default.EnableSSIF = value; }
+                try { BDInfoCli.Properties.Settings.Default.EnableSSIF = value; }
                 catch { }
             }
         }
@@ -55,13 +55,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return BDInfo.Properties.Settings.Default.AutosaveReport; }
+                try { return BDInfoCli.Properties.Settings.Default.AutosaveReport; }
                 catch { return false; }
             }
 
             set
             {
-                try { BDInfo.Properties.Settings.Default.AutosaveReport = value; }
+                try { BDInfoCli.Properties.Settings.Default.AutosaveReport = value; }
                 catch { }
             }
         }
@@ -70,13 +70,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return BDInfo.Properties.Settings.Default.GenerateFrameDataFile; }
+                try { return BDInfoCli.Properties.Settings.Default.GenerateFrameDataFile; }
                 catch { return false; }
             }
 
             set
             {
-                try { BDInfo.Properties.Settings.Default.GenerateFrameDataFile = value; }
+                try { BDInfoCli.Properties.Settings.Default.GenerateFrameDataFile = value; }
                 catch { }
             }
         }
@@ -85,13 +85,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return BDInfo.Properties.Settings.Default.FilterLoopingPlaylists; }
+                try { return BDInfoCli.Properties.Settings.Default.FilterLoopingPlaylists; }
                 catch { return false; }
             }
 
             set
             {
-                try { BDInfo.Properties.Settings.Default.FilterLoopingPlaylists = value; }
+                try { BDInfoCli.Properties.Settings.Default.FilterLoopingPlaylists = value; }
                 catch { }
             }
         }
@@ -100,13 +100,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return BDInfo.Properties.Settings.Default.FilterShortPlaylists; }
+                try { return BDInfoCli.Properties.Settings.Default.FilterShortPlaylists; }
                 catch { return false; }
             }
 
             set
             {
-                try { BDInfo.Properties.Settings.Default.FilterShortPlaylists = value; }
+                try { BDInfoCli.Properties.Settings.Default.FilterShortPlaylists = value; }
                 catch { }
             }
         }
@@ -115,13 +115,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return BDInfo.Properties.Settings.Default.FilterShortPlaylistsValue; }
+                try { return BDInfoCli.Properties.Settings.Default.FilterShortPlaylistsValue; }
                 catch { return 0; }
             }
 
             set
             {
-                try { BDInfo.Properties.Settings.Default.FilterShortPlaylistsValue = value; }
+                try { BDInfoCli.Properties.Settings.Default.FilterShortPlaylistsValue = value; }
                 catch { }
             }
         }
@@ -130,13 +130,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return BDInfo.Properties.Settings.Default.UseImagePrefix; }
+                try { return BDInfoCli.Properties.Settings.Default.UseImagePrefix; }
                 catch { return false; }
             }
 
             set
             {
-                try { BDInfo.Properties.Settings.Default.UseImagePrefix = value; }
+                try { BDInfoCli.Properties.Settings.Default.UseImagePrefix = value; }
                 catch { }
             }
         }
@@ -145,13 +145,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return BDInfo.Properties.Settings.Default.UseImagePrefixValue; }
+                try { return BDInfoCli.Properties.Settings.Default.UseImagePrefixValue; }
                 catch { return null; }
             }
 
             set
             {
-                try { BDInfo.Properties.Settings.Default.UseImagePrefixValue = value; }
+                try { BDInfoCli.Properties.Settings.Default.UseImagePrefixValue = value; }
                 catch { }
             }
         }
@@ -160,13 +160,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return BDInfo.Properties.Settings.Default.KeepStreamOrder; }
+                try { return BDInfoCli.Properties.Settings.Default.KeepStreamOrder; }
                 catch { return false; }
             }
 
             set
             {
-                try { BDInfo.Properties.Settings.Default.KeepStreamOrder = value; }
+                try { BDInfoCli.Properties.Settings.Default.KeepStreamOrder = value; }
                 catch { }
             }
         }
@@ -175,13 +175,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return BDInfo.Properties.Settings.Default.GenerateTextSummary; }
+                try { return BDInfoCli.Properties.Settings.Default.GenerateTextSummary; }
                 catch { return false; }
             }
 
             set
             {
-                try { BDInfo.Properties.Settings.Default.GenerateTextSummary = value; }
+                try { BDInfoCli.Properties.Settings.Default.GenerateTextSummary = value; }
                 catch { }
             }
         }
@@ -190,13 +190,13 @@ namespace BDInfoLib
         {
             get
             {
-                try { return BDInfo.Properties.Settings.Default.LastPath; }
+                try { return BDInfoCli.Properties.Settings.Default.LastPath; }
                 catch { return ""; }
             }
 
             set
             {
-                try { BDInfo.Properties.Settings.Default.LastPath = value; }
+                try { BDInfoCli.Properties.Settings.Default.LastPath = value; }
                 catch { }
             }
         }
@@ -205,7 +205,7 @@ namespace BDInfoLib
         {
             try
             {
-                BDInfo.Properties.Settings.Default.Save();
+                BDInfoCli.Properties.Settings.Default.Save();
             }
             catch { }
         }

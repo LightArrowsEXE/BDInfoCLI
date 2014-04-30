@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("BDInfo")]
+[assembly: AssemblyTitle("BDInfoCli")]
 [assembly: AssemblyDescription("Blu-ray Video and Audio Specifications Collection Library")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Cinema Squid")]
-[assembly: AssemblyProduct("BDInfo")]
-[assembly: AssemblyCopyright("Copyright © Cinema Squid 2011")]
+[assembly: AssemblyCompany("Foremerly Cinema Squid")]
+[assembly: AssemblyProduct("BDInfoCli")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.5.8")]
-[assembly: AssemblyFileVersion("0.5.8")]
+[assembly: AssemblyVersion("0.0.2")]
+[assembly: AssemblyFileVersion("0.0.2")]

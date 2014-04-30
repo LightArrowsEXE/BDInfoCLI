@@ -1,4 +1,4 @@
-﻿using BDInfoLib;
+﻿using BDInfoCli;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,7 +17,7 @@ namespace BDInfo
 
         #region BDROM Initialization Worker
 
-        private BackgroundWorker InitBDROMWorker = null;
+        //private BackgroundWorker InitBDROMWorker = null;
 
         public void InitBDROM(string path)
         {
@@ -184,7 +184,7 @@ namespace BDInfo
                 }
 
                 timer = new System.Threading.Timer(ScanBDROMProgress, scanState, 1000, 1000);
-                System.Console.WriteLine("\n{0,16}{1,-15}{2,-13}{3}","", "File", "Elapsed", "Remainging");
+                System.Console.WriteLine("\n{0,16}{1,-15}{2,-13}{3}","", "File", "Elapsed", "Remaining");
 
                 foreach (TSStreamFile streamFile in streamFiles)
                 {
@@ -381,7 +381,6 @@ namespace BDInfo
             return resp;
         }
 
-
         #region Play Lists        
         
         public static int ComparePlaylistFiles(TSPlaylistFile x, TSPlaylistFile y)
@@ -412,6 +411,28 @@ namespace BDInfo
                 {
                     return x.Name.CompareTo(y.Name);
                 }
+            }
+        }
+
+        public void SelectPlayList(List<String> inputPlaylists)
+        {
+            foreach (String playlistName in inputPlaylists)
+            {
+                String Name = playlistName.ToUpper();
+                if (BDROM.PlaylistFiles.ContainsKey(Name))
+                {
+                    if (!selectedPlayLists.Contains(BDROM.PlaylistFiles[Name]))
+                    {
+                        selectedPlayLists.Add(BDROM.PlaylistFiles[Name]);
+                    }
+
+                }
+            }
+
+            //throw error if no playlist is found
+            if (selectedPlayLists.Count == 0)
+            {
+                throw new Exception("No matching playlists found on BD");
             }
         }
 
@@ -491,10 +512,6 @@ namespace BDInfo
 
                  
                     String groupString = (groupIndex + 1).ToString();
-                    //playlistIndex.Tag = groupIndex;
-
-                    //String palylistString = playlist.Name);
-                    //playlistName.Tag = playlist.Name;
 
                     TimeSpan playlistLengthSpan = new TimeSpan((long)(playlist.TotalLength * 10000000));
                     String length = string.Format(
@@ -502,24 +519,20 @@ namespace BDInfo
                         playlistLengthSpan.Hours,
                         playlistLengthSpan.Minutes,
                         playlistLengthSpan.Seconds);
-                    ///playlistLength.Tag = playlist.TotalLength;
 
                     String fileSize;
                     if (BDInfoSettings.EnableSSIF &&
                         playlist.InterleavedFileSize > 0)
                     {
                         fileSize = playlist.InterleavedFileSize.ToString("N0");
-                        //playlistSize.Tag = playlist.InterleavedFileSize;
                     }
                     else if (playlist.FileSize > 0)
                     {
                         fileSize = playlist.FileSize.ToString("N0");
-                        //playlistSize.Tag = playlist.FileSize;
                     }
                     else
                     {
                         fileSize = "-";
-                        ///playlistSize.Tag = playlist.FileSize;
                     }
 
                     String fileSize2;
@@ -531,7 +544,6 @@ namespace BDInfo
                     {
                         fileSize2 = "-";
                     }
-                    //playlistSize2.Tag = playlist.TotalAngleSize;
 
                     System.Console.WriteLine(String.Format("{0,-4:G}{1,-7}{2,-15}{3,-10}{4,-16}{5,-16}", index.ToString(), groupString, playlist.Name, length, fileSize, fileSize2));
                     index++;
@@ -547,5 +559,6 @@ namespace BDInfo
         }
 
         #endregion
+
     }
 }

@@ -21,31 +21,96 @@ using BDInfo;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-namespace BDInfoLib
+using CommandLine;
+using CommandLine.Text;
+using System.Reflection;
+using System.IO;
+
+namespace BDInfoCli
 {
     static class Program
     {
-
-
         static void Main(string[] args)
         {
-            if (args.Length != 2)
+            var options = new MyOptions();
+            // Parse in 'strict mode', success or quit
+            if(CommandLine.Parser.Default.ParseArguments(args, options))
             {
-                System.Console.WriteLine("Usage: BDinfo <BD Folder> <Save Path>");
+                validatePath(options.input);
+                validatePath(options.output);
+
+                runner run = new runner();
+                run.InitBDROM(options.input);
+
+                //If mpsl specified, select playlist in a different way
+                if (options.playlistsToScan != null)
+                {
+                    try
+                    {
+                        System.Console.WriteLine("-m or --mpls specified, running in non-interactive mode...");
+                        System.Console.Write("Atempting to find ");
+                        System.Console.Write(String.Join<String>(", ", options.playlistsToScan) + Environment.NewLine);
+                        
+                        run.SelectPlayList(options.playlistsToScan);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("ERROR: " + ex.Message);
+                        Environment.Exit(-1);
+                    }
+                }
+                else
+                {
+                    run.SelectPlayList();
+                }
+                
+                run.AddStreamFilesInPlaylists();
+                run.ScanBDROM();
+                run.GenerateReport(options.output);
+            }
+        }
+
+        //Returns 
+        public static void validatePath(String pathName)
+        {
+            if (pathName == null)
+            {
+                System.Console.WriteLine("Usage: BDInfoCli <BD Folder> <Save Path>");
                 Environment.Exit(-1);
             }
+            if(!Directory.Exists(pathName))
+            {
+                System.Console.WriteLine("folder '{0}' not found!", pathName);
+                Environment.Exit(-1);
+            }
+        }
+    }
 
-            String BDpath = args[0];
-            String savePath = args[1];
+    class MyOptions
+    {
+        [ValueOption(0)]
+        public string input { get; set; }
 
-            runner run = new runner();
-            run.InitBDROM(BDpath);
+        [ValueOption(1)]
+        public string output { get; set; }
 
-            run.SelectPlayList();
-            run.AddStreamFilesInPlaylists();
-            run.ScanBDROM();
-            run.GenerateReport(savePath);
+        [OptionList('m', "mpls", Required = false, HelpText = "Specify the playlists to scan, non-interactive")]
+        public List<String> playlistsToScan { get; set; }
+
+        [HelpOption]
+        public string GetUsage()
+        {
+            var help = new HelpText {
+                Heading = new HeadingInfo("BDInfoCli", (Assembly.GetExecutingAssembly().GetName().Version).ToString()),
+                AdditionalNewLineAfterOption = true,
+                AddDashesToOption = true
+            };
+            help.AddPreOptionsLine("Licensed under LGPL V2.1");
+            help.AddPreOptionsLine("Usage: BDInfoCli <BD Folder> <Save Path>");
+            help.AddOptions(this);
+            return help;
         }
     }
 }
+
 
