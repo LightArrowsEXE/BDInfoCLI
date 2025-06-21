@@ -18,6 +18,8 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
     <TargetFrameworkProfile />
+    <GenerateResourceUsePreserializedResources>false</GenerateResourceUsePreserializedResources>
+    <RuntimeIdentifiers>win</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -175,18 +177,12 @@
     <None Include="Resources\Toma4025-Rumax-Bluray-disc.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DiscUtils">
-      <Version>0.16.13</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft-WindowsAPICodePack-Shell">
-      <Version>1.1.4</Version>
-    </PackageReference>
-    <PackageReference Include="ZedGraph">
-      <Version>5.1.7</Version>
-    </PackageReference>
+    <PackageReference Include="DiscUtils" Version="0.16.13" />
+    <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.4" />
+    <PackageReference Include="ZedGraph" Version="5.1.7" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
