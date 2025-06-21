@@ -1,0 +1,34 @@
+name: Build and Publish Artifacts
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+  schedule:
+    - cron: "0 0 1 * *"
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Restore NuGet packages
+        run: nuget restore BDInfo.sln
+        shell: cmd
+
+      - name: Build solution (Release)
+        run: msbuild BDInfo.sln /p:Configuration=Release /p:Platform="Any CPU"
+        shell: cmd
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: BDInfo-Release
+          path: BDInfo/BDInfo/bin/Release/
+          retention-days: 30
